@@ -1,5 +1,5 @@
 from fastapi import HTTPException
-from .models import PlayerBase, PlayerDb
+from .models import PlayerBase, PlayerDb, PlayerCreate
 from sqlmodel import Session, select
 
 
@@ -10,4 +10,5 @@ def create_player(session: Session, player_in: PlayerBase):
   session.add(playerdb)
   session.commit()
   session.refresh(playerdb)
-  return playerdb
+  response = {"id": playerdb.id, "name": playerdb.name}
+  return response
