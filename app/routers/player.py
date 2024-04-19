@@ -11,3 +11,8 @@ router = APIRouter(prefix='/players')
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def create_player(*, session: Session = Depends(get_session), player_in: PlayerBase):
   return player_crud.create_player(session, player_in)
+
+#Hae kaikki pelaajat (nimi + id)
+@router.get("/", response_model=list[PlayerDb])
+def get_players(session: Session = Depends(get_session)):
+  return player_crud.get_players(session)

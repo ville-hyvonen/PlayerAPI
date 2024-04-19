@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlmodel import SQLModel, Field
-from typing import List
+from typing import List, Optional
 
 
 class PlayerBase(SQLModel):
@@ -9,6 +9,7 @@ class PlayerBase(SQLModel):
 
 class PlayerDb(PlayerBase, table=True):
   id: int = Field(default=None, primary_key=True)
+  name: str
 
 
 class PlayerCreate(PlayerBase):
