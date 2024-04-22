@@ -1,6 +1,6 @@
 from datetime import datetime
 from sqlmodel import SQLModel, Field, Relationship
-from typing import List, Optional
+from typing import List
 from pydantic import BaseModel
 
 
@@ -14,6 +14,11 @@ class EventResponse(BaseModel):
   detail: str
   timestamp: datetime
   player_id: int
+
+class PlayerWithEventsResponse(BaseModel):
+  id: int
+  name: str
+  events: List[EventResponse]
 
 class PlayerBase(SQLModel):
   name: str = Field(index=True)
@@ -39,8 +44,9 @@ class Event(EventBase, table=True):
   player_id: int = Field(foreign_key="player.id")
   player: Player = Relationship(back_populates="events")
 
-class EventCreate(EventBase):
-  pass
+class EventCreate(BaseModel):
+  type: str
+  detail: str
 
 class EventPublic(EventBase):
   id: int
